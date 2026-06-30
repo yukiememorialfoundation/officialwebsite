@@ -712,8 +712,11 @@ footer p {
         return;
       }
 
-      // データをHTMLに変換して追加
-      data.forEach(item => {
+      // 【修正箇所】最新の5件だけを切り出す (配列の0番目から5件分)
+      const latestNews = data.slice(0, 5);
+
+      // 5件分のデータだけをHTMLに変換して追加
+      latestNews.forEach(item => {
         const itemHtml = `
           <div class="news-item">
             <div class="news-header">
