@@ -698,8 +698,35 @@ footer p {
 </div>
 
 <script>
-  // 先ほどコピーしたGASのウェブアプリURLに書き換えてください
+  // ここにGASのウェブアプリURLを入れてください
   const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwomR9K5BoWOrjMocUiA7-kvUyf9GE-QKU9OD2zf20_p55Vm2f6RiNWwBS_VOJRBHMd0g/exec';
+
+  // 日付を「YYYY年MM月DD日」に変換するヘルパー
+  function formatDateToYMD(dateStr) {
+    if (!dateStr) return '';
+
+    // まず Date コンストラクタで試す
+    const d1 = new Date(dateStr);
+    if (!isNaN(d1)) {
+      const y = d1.getFullYear();
+      const m = String(d1.getMonth() + 1).padStart(2, '0');
+      const d = String(d1.getDate()).padStart(2, '0');
+      return `${y}年${m}月${d}日`;
+    }
+
+    // 失敗したら、よくあるパターン (YYYY-MM-DD, YYYY/MM/DD, YYYYMMDD, YYYY.MM.DD, YYYY年M月D日 など) を正規表現で取り出す
+    const re = /(\d{4})[^\d]?(\d{1,2})[^\d]?(\d{1,2})/;
+    const m = dateStr.match(re);
+    if (m) {
+      const y = m[1];
+      const mm = String(m[2]).padStart(2, '0');
+      const dd = String(m[3]).padStart(2, '0');
+      return `${y}年${mm}月${dd}日`;
+    }
+
+    // どれにも当てはまらなければ元の文字列を返す（もしくは空文字）
+    return dateStr;
+  }
 
   fetch(WEB_APP_URL)
     .then(response => response.json())
@@ -707,23 +734,25 @@ footer p {
       const newsListContainer = document.getElementById('news-list');
       newsListContainer.innerHTML = ''; // ローディング表示を消去
 
-      if (data.length === 0) {
+      if (!Array.isArray(data) || data.length === 0) {
         newsListContainer.innerHTML = '<p>現在お知らせはありません。</p>';
         return;
       }
 
-      // 【修正箇所】最新の5件だけを切り出す (配列の0番目から5件分)
+      // 最新の5件だけを表示
       const latestNews = data.slice(0, 5);
 
-      // 5件分のデータだけをHTMLに変換して追加
       latestNews.forEach(item => {
+        // item.date を年月日のみの形式に整形
+        const formattedDate = formatDateToYMD(item.date);
+
         const itemHtml = `
           <div class="news-item">
             <div class="news-header">
-              <span class="news-date">${item.date}</span>
-              <span class="news-title">${item.title}</span>
+              <span class="news-date">${formattedDate}</span>
+              <span class="news-title">${item.title || ''}</span>
             </div>
-            <div class="news-content">${item.content}</div>
+            <div class="news-content">${item.content || ''}</div>
           </div>
         `;
         newsListContainer.insertAdjacentHTML('beforeend', itemHtml);
