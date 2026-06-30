@@ -1,1 +1,854 @@
 
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yukie Memorial Foundation</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&display=swap');
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root {
+    --primary: #0f6ab4;
+    --primary-light: #1e7cc4;
+    --primary-dark: #0a4a7f;
+    --accent: #25b8d8;
+    --accent-light: #3bc9e8;
+    --bg-light: #f8f9fa;
+    --bg-white: #ffffff;
+    --text-dark: #1a1a1a;
+    --text-light: #666;
+    --border-light: #e0e0e0;
+}
+
+body{
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Yu Gothic", "Hiragino Kaku Gothic ProN", sans-serif;
+    line-height: 1.8;
+    color: var(--text-dark);
+    background: var(--bg-light);
+    scroll-behavior: smooth;
+}
+
+header{
+    background: linear-gradient(135deg, rgba(15, 106, 180, 0.6), rgba(37, 184, 216, 0.6)), url('hawaii_photo.JPG') center/cover no-repeat;
+    color: white;
+    text-align: center;
+    padding: 120px 20px;
+    position: relative;
+    overflow: hidden;
+    margin-top: 68px;
+}
+
+/* Top bar: logo (left) + nav (right) */
+.topbar{
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    background: white;
+    padding: 12px 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.logo img{
+    height: 48px;
+    width: auto;
+}
+
+.logo a{
+    display: flex;
+}
+
+.nav ul{
+    display: flex;
+    gap: 18px;
+    align-items: center;
+}
+
+.nav a{
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.nav a:hover{
+    background: rgba(15, 106, 180, 0.08);
+    color: var(--primary-dark);
+}
+
+/* Hamburger button */
+.hamburger{
+    display: none;
+    background: transparent;
+    border: none;
+    color: var(--primary);
+    cursor: pointer;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+}
+
+.hamburger .bar{
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--primary);
+    position: relative;
+    transition: all 0.25s ease;
+}
+.hamburger .bar::before,
+.hamburger .bar::after{
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 22px;
+    height: 2px;
+    background: var(--primary);
+    transition: all 0.25s ease;
+}
+.hamburger .bar::before{ top: -7px; }
+.hamburger .bar::after{ top: 7px; }
+
+/* small screens: show hamburger and hide horizontal nav */
+@media(max-width: 768px){
+    .topbar{ 
+        padding: 12px; 
+    }
+    .logo img{ height:40px; }
+    .nav ul{ gap: 12px; }
+
+    .nav ul{
+        display: none; /* hide desktop nav */
+    }
+    .hamburger{
+        display: flex;
+    }
+
+    /* mobile open menu */
+    .nav.open ul{
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        position: absolute;
+        top: 100%;
+        right: 12px;
+        background: white;
+        padding: 12px 14px;
+        border-radius: 10px;
+        min-width: 160px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+        border: 1px solid var(--border-light);
+    }
+    .nav.open a{
+        display:block;
+        padding: 8px 10px;
+        color: var(--primary);
+    }
+
+    /* animate hamburger to X when open */
+    .hamburger.open .bar{
+        background: transparent;
+    }
+    .hamburger.open .bar::before{
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+    .hamburger.open .bar::after{
+        transform: rotate(-45deg) translate(5px, -5px);
+    }
+}
+
+header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 50%, rgba(59, 201, 232, 0.15), transparent);
+    pointer-events: none;
+}
+
+header h1{
+    font-family: "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", "MS PMincho", serif;
+    font-size: 56px;
+    margin-bottom: 20px;
+    font-weight: 700;
+    line-height: 1.4;
+    letter-spacing: 0.5px;
+    position: relative;
+    z-index: 1;
+    animation: fadeInDown 0.8s ease;
+}
+
+header p{
+    font-family: "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", "MS PMincho", serif;
+    font-size: 22px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 1;
+    animation: fadeInUp 0.8s ease 0.2s both;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.container{
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+section{
+    padding: 100px 0;
+    position: relative;
+}
+
+section:nth-child(even) {
+    background: white;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-title h2 {
+    font-size: 42px;
+    margin-bottom: 15px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    border: none;
+    padding: 0;
+}
+
+.card{
+    background: var(--bg-white);
+    border-radius: 16px;
+    padding: 50px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.card:hover {
+    box-shadow: 0 20px 60px rgba(15, 106, 180, 0.15);
+    transform: translateY(-5px);
+}
+
+h2{
+    color: var(--primary);
+    margin-bottom: 20px;
+    border-left: 6px solid var(--accent);
+    padding-left: 16px;
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.profile{
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 60px;
+    align-items: flex-start;
+}
+
+.profile img{
+    width: 100%;
+    border-radius: 16px;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+    transition: transform 0.4s ease;
+}
+
+.profile img:hover {
+    transform: scale(1.03);
+}
+
+ul{
+    margin-left: 0;
+    list-style: none;
+}
+
+ul li {
+    padding: 14px 0;
+    padding-left: 30px;
+    position: relative;
+    color: var(--text-light);
+    transition: color 0.3s ease;
+}
+
+ul li:before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 24px;
+    font-weight: bold;
+}
+
+ul li:hover {
+    color: var(--primary);
+}
+
+.feature{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.box{
+    background: linear-gradient(135deg, var(--bg-white), #f5fbff);
+    padding: 40px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(37, 184, 216, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+}
+
+.box:hover::before {
+    transform: scaleX(1);
+}
+
+.box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 50px rgba(15, 106, 180, 0.15);
+    background: linear-gradient(135deg, #f5fbff, #e3f2fd);
+}
+
+.box h3{
+    color: var(--primary);
+    margin-bottom: 18px;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.box p {
+    color: var(--text-light);
+    line-height: 1.8;
+    font-size: 15px;
+}
+
+.message-text {
+    font-size: 18px;
+    line-height: 2;
+    color: var(--text-dark);
+}
+
+.message-text strong {
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.info-item {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.info-label {
+    color: var(--primary);
+    font-weight: 600;
+    margin-bottom: 4px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.info-value {
+    color: var(--text-dark);
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+footer{
+    background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+    color: #fff;
+    text-align: center;
+    padding: 50px 20px;
+    margin-top: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+footer p {
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    opacity: 0.9;
+}
+
+@media(max-width: 768px){
+    header {
+        padding: 80px 20px;
+        margin-top: 60px;
+    }
+
+    header h1{
+        font-size: 36px;
+    }
+
+    header p {
+        font-size: 18px;
+    }
+
+    .profile{
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    section {
+        padding: 60px 0;
+    }
+
+    .card {
+        padding: 30px;
+    }
+
+    .feature {
+        grid-template-columns: 1fr;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-title h2 {
+        font-size: 28px;
+    }
+}
+
+@media(max-width: 480px){
+    header h1 {
+        font-size: 28px;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .profile img {
+        width: 100%;
+    }
+
+    h2 {
+        font-size: 20px;
+        padding-left: 12px;
+    }
+}
+
+/* お問い合わせフォーム用スタイル */
+.contact-section{
+  padding: 80px 0;
+  background: linear-gradient(180deg, #fbfeff, #ffffff);
+}
+.contact-card{
+  /* Match .card sizing and style */
+  width: 100%;
+  padding: 50px;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0,0,0,0.04);
+  background: var(--bg-white);
+}
+.contact-form .form-row{
+  margin-top: 14px;
+}
+.contact-form label{
+  display:block;
+  margin-bottom:6px;
+  color:var(--primary);
+  font-weight:600;
+  font-size:14px;
+}
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea{
+  width:100%;
+  padding:12px 14px;
+  border-radius:10px;
+  border:1px solid var(--border-light);
+  background:#fff;
+  font-size:15px;
+  color:var(--text-dark);
+  box-shadow:none;
+}
+.btn-primary{
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  color:#fff;
+  border:none;
+  padding:10px 18px;
+  border-radius:10px;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow: 0 8px 20px rgba(15,106,180,0.12);
+}
+.btn-primary:hover{
+  transform: translateY(-2px);
+}
+@media(max-width:768px){
+  .contact-section{padding:40px 0;}
+  .contact-card{padding:20px;}
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="logo">
+        <!-- Put YMF_logo.png in the repo root or adjust path -->
+        <a href="#home"><img src="YMF_logo.png" alt="YMFロゴ"></a>
+    </div>
+    <button class="hamburger" aria-label="メニュー" aria-expanded="false" aria-controls="main-nav">
+        <span class="bar"></span>
+    </button>
+    <nav id="main-nav" class="nav" aria-label="メインナビゲーション">
+        <ul>
+            <li><a href="#home">HOME</a></li>
+            <li><a href="#mvv">MVV</a></li>
+            <li><a href="#action">活動内容</a></li>
+            <li><a href="#blog">NEWS</a></li>
+            <li><a href="#about">ABOUT</a></li>
+            <li><a href="#contact">お問い合わせ</a></li>
+        </ul>
+    </nav>
+</div>
+
+<header id="home">
+<h1>私というかけがえのない木を<br>やさしく健やかに育む<br>ココロとカラダ</h1>
+<p>林ゆき枝 (1967.6.5〜2023.6.14)</p>
+</header>
+
+<!-- NEWS anchor (no content yet) -->
+<div id="mvv"></div>
+
+<section id="mvv">
+<div class="container">
+<div class="section-title">
+<h2>MVV</h2>
+</div>
+
+<div class="feature">
+
+<div class="box">
+<h3>🏃 MISSION</h3>
+<p>早稲田大学時代に4年連続5区出場。区間賞を獲得し「山登り」の名ランナーとして活躍。</p>
+</div>
+
+<div class="box">
+<h3>🥇 VISION</h3>
+<p>実業団コーチとしてオリンピック選手を含む数多くのトップランナーを指導。</p>
+</div>
+
+<div class="box">
+<h3>👥 VALUE</h3>
+<p>初心者からフルマラソン挑戦者まで幅広いランナーの走力向上をサポート。</p>
+</div>
+
+</div>
+
+</div>
+</section>
+
+<section id="action">
+<div class="container">
+
+<div class="card">
+
+<h2>活動内容</h2>
+
+<ul>
+<li>児童養護施設への食糧寄付</li>
+<li>メモリアルFREE10イベントの開催</li>
+<li>健康増進の啓蒙活動</li>
+<li>医療従事者への健康づくり支援</li>
+<li>メモリアルブックの制作と配布</li>
+<li>メモリアルデーイベントの開催</li>
+</ul>
+
+</div>
+
+</div>
+</section>
+
+<section id="blog">
+<div class="container">
+
+<div class="card">
+
+<h2>NEWS</h2>
+
+<p class="message-text">
+<strong>「走ることは人生を豊かにする。」</strong><br><br>
+金哲彦コーチは、競技者だけでなく健康づくりや生涯スポーツとしてのランニングの普及にも力を注いでいます。
+一人ひとりの目標に合わせた指導を通じ、多くのランナーをサポートしています。
+</p>
+
+</div>
+</section>
+
+<section id="about">
+<div class="container">
+
+<div class="card">
+
+<h2>団体概要</h2>
+
+<div class="info-grid">
+<div class="info-item">
+<div class="info-label">団体名</div>
+<div class="info-value">一般財団法人 幸枝メモリアル財団</div>
+</div>
+
+<div class="info-item">
+<div class="info-label">設立日</div>
+<div class="info-value">2024年6月5日</div>
+</div>
+
+<div class="info-item">
+<div class="info-label">所在地</div>
+<div class="info-value">142-0061<br>東京都品川区小山台一丁目25番13号</div>
+</div>
+
+<div class="info-item">
+<div class="info-label">代表理事</div>
+<div class="info-value">金 哲彦</div>
+</div>
+</div>
+
+<p style="margin-top: 30px; padding-top: 30px; border-top: 1px solid var(--border-light); color: var(--text-light); line-height: 1.9;">
+当団体は、2023年に卵巣がんのため56歳で他界した歯科医師故林幸枝の意志を引き継いで2024年に設立されました。<br>
+発症から9年間、長きにわたる闘病生活を通じて故人が体験したことを、今生きる人たちに届けることをミッションに活動していきます。<br>
+コンセプトはココロとカラダの健康を維持増進すること。<br>
+また、故人が生涯を通じて身を置いた、医療従事者の健康づくりにかかわる事業も行います。<br>
+</p>
+
+</div>
+</section>
+
+<section id="profile">
+<div class="container">
+<div class="card">
+<div class="profile">
+
+<img src="kintetsuhiko2026.jpg" alt="プロランニングコーチ 金哲彦">
+
+<div>
+
+<h2>代表理事プロフィール</h2>
+
+<p>
+1964年福岡県北九州市生まれ。<br><br>
+早稲田大学時代、無名ながら１年生で箱根駅伝の５区山登りに抜擢され３年時には区間新記録を樹立、早稲田の二連覇に貢献した。<br><br>
+1986年リクルートに入社してみずから陸上部を創設。
+フルマラソンでは別大マラソン3位。東京国際マラソン3位など選手として活躍後、1992年に故小出義雄監督率いる同クラブのコーチとなり有森裕子[...] 
+2002年市民ランナークラブの先駆けとなるNPO法人ニッポンランナーズを創設。
+現在は、プロランニングコーチとして全国各地のマラソン大会にゲスト参加するなどランニングの普及活動を行なっている。<br><br>
+また、テレビでは『ランスマ倶楽部』（NHK-BS）のＭＣをつとめ、駅伝･マラソンの解説者としても活動中。
+2019年NHK大河ドラマ『いだてん〜東京オリムピック噺』ではマラソン指導を担当した。
+東京およびパリオリンピックでも陸上競技・マラソンの解説をつとめた。<br><br>
+ランニングに関する著書は多数。
+近著は『新型コロナ時代のランニング』（KADOKAWA）『厚底シューズ時代の新・体幹ランニング』（講談社）など。
+</p>
+
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- Contact form section inserted before footer -->
+<section id="contact-form" class="contact-section">
+  <div class="container">
+    <div class="card contact-card">
+      <h2>お問い合わせ</h2>
+      <p class="message-text">ご質問・ご相談はこちらのフォームからお送りください。送信すると既定のメールアプリが開きます
+
+      <form id="site-contact-form" class="contact-form" novalidate>
+        <div class="form-row">
+          <label for="cf-name">お名前（必須）</label>
+          <input type="text" id="cf-name" name="name" required placeholder="例：山田 太郎">
+        </div>
+
+        <div class="form-row">
+          <label for="cf-email">メールアドレス（必須）</label>
+          <input type="email" id="cf-email" name="email" required placeholder="your@example.com">
+        </div>
+
+        <div class="form-row">
+          <label for="cf-subject">件名</label>
+          <input type="text" id="cf-subject" name="subject" placeholder="お問い合わせの件名">
+        </div>
+
+        <div class="form-row">
+          <label for="cf-message">本文（必須）</label>
+          <textarea id="cf-message" name="message" rows="6" required placeholder="お問い合わせ内容をご記入ください"></textarea>
+        </div>
+
+        <div style="display:flex;gap:12px;align-items:center;margin-top:18px;">
+          <button type="submit" class="btn-primary">送信（メールアプリを開く）</button>
+          <div id="contact-result" aria-live="polite" style="color:var(--primary);font-weight:600;"></div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+<p>© All rights reserved 2026 一般財団法人幸枝メモリアル財団</p>
+</footer>
+
+<script>
+// Mobile hamburger menu toggle
+(function(){
+    const hamburger = document.querySelector('.hamburger');
+    const nav = document.getElementById('main-nav');
+    if(!hamburger || !nav) return;
+
+    hamburger.addEventListener('click', function(e){
+        const expanded = this.classList.toggle('open');
+        nav.classList.toggle('open');
+        const isOpen = this.classList.contains('open');
+        this.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    // Close menu when clicking a nav link
+    nav.querySelectorAll('a').forEach(a=>{
+        a.addEventListener('click', ()=>{
+            if(nav.classList.contains('open')){
+                nav.classList.remove('open');
+                hamburger.classList.remove('open');
+                hamburger.setAttribute('aria-expanded','false');
+            }
+        });
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', function(e){
+        if(!nav.classList.contains('open')) return;
+        const target = e.target;
+        if(!nav.contains(target) && !hamburger.contains(target)){
+            nav.classList.remove('open');
+            hamburger.classList.remove('open');
+            hamburger.setAttribute('aria-expanded','false');
+        }
+    });
+})();
+</script>
+
+<script>
+(function(){
+    const form = document.getElementById('site-contact-form');
+    const result = document.getElementById('contact-result');
+    const to = 'kin_tetsuhiko@mac.com';
+
+    if(!form) return;
+
+    form.addEventListener('submit', function(e){
+        e.preventDefault();
+        result.textContent = '';
+
+        const name = document.getElementById('cf-name').value.trim();
+        const email = document.getElementById('cf-email').value.trim();
+        const subject = document.getElementById('cf-subject').value.trim() || 'お問い合わせ（Webサイト）';
+        const message = document.getElementById('cf-message').value.trim();
+
+        if(!name){
+          result.textContent = 'お名前を入力してください';
+          return;
+        }
+        if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+          result.textContent = '有効なメールアドレスを入力してください';
+          return;
+        }
+        if(!message){
+          result.textContent = '本文を入力してください';
+          return;
+        }
+
+        // mailto: の本文を作る（URLエンコード）
+        const bodyLines = [
+          `お名前: ${name}`,
+          `メール: ${email}`,
+          '',
+          '----- メッセージ -----',
+          message
+        ];
+        const body = encodeURIComponent(bodyLines.join('\n'));
+        const mailto = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${body}`;
+
+        // メールアプリを開く
+        window.location.href = mailto;
+
+        // ユーザーに短い案内を表示
+        result.textContent = 'メールアプリが開きます。送信が完了したらページに戻ってください。';
+    });
+})();
+</script>
+
+</body>
+</html>
